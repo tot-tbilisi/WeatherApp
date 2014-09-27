@@ -4,24 +4,43 @@
 package ge.tot.weatherapp;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Forecast
  */
 public class Forecast {
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
     private final Date date;
     private final String description;
     private final double nightTemp;
     private final double dayTemp;
     private final String iconUrl;
 
+
+    public static List<Forecast> makeRandom(int daysNumber) {
+        Date today = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+        List<Forecast> result = new ArrayList<Forecast>();
+        for (int i = 0; i < daysNumber; ++i) {
+            if (i > 0) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            Forecast forecast = makeRandom(calendar.getTime());
+            result.add(forecast);
+        }
+        return result;
+    }
+
     public static Forecast makeRandom(Date date) {
-        Random random = new Random(System.currentTimeMillis());
-        double dayTemp = random.nextDouble() * 10.0;
-        double nightTemp = random.nextDouble() * 5.0;
-        return new Forecast(date, "Random", dayTemp, nightTemp, null);
+        double dayTemp = 15 + RANDOM.nextDouble() * 10.0;
+        double nightTemp = 5 + RANDOM.nextDouble() * 5.0;
+        return new Forecast(date, "Random", nightTemp, dayTemp, null);
     }
 
     public Forecast(Date date, String description, double nightTemp, double dayTemp, String iconUrl) {
@@ -36,7 +55,7 @@ public class Forecast {
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
         return capitalize(dateFormat.format(date)
-                + String.format(" — %.2f°, %.2f°", nightTemp, dayTemp));
+                + String.format(" — night: %.2f°C, day: %.2f°C", nightTemp, dayTemp));
     }
 
     public Date getDate() {

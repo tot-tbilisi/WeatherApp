@@ -6,8 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -16,9 +14,7 @@ public class MyActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<Forecast> forecasts = new ArrayList<Forecast>();
-        forecasts.add(Forecast.makeRandom(new Date()));
-        forecasts.add(Forecast.makeRandom(new Date()));
+        List<Forecast> forecasts = Forecast.makeRandom(7);
 
         ArrayAdapter<Forecast> adapter =
             new ArrayAdapter<Forecast>(this, android.R.layout.simple_list_item_1,
