@@ -36,9 +36,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            forecast = (Forecast) getArguments().getSerializable(ARG_FORECAST);
-        }
+        initFromBundle(savedInstanceState == null ? getArguments() : savedInstanceState);
     }
 
     @Override
@@ -52,5 +50,15 @@ public class ForecastFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView text = (TextView) view.findViewById(R.id.forecast_text);
         text.setText(forecast.toString());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(ARG_FORECAST, forecast);
+    }
+
+    private void initFromBundle(Bundle bundle) {
+        forecast = (Forecast) bundle.getSerializable(ARG_FORECAST);
     }
 }
