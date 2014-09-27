@@ -6,19 +6,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MyActivity">
+    tools:context="ge.tot.weatherapp.ForecastActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:text="Place for Random Forecast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Forecast"
-        android:id="@+id/forecast"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
