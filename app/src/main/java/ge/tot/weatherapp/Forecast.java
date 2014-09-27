@@ -3,6 +3,7 @@
  */
 package ge.tot.weatherapp;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import java.util.Random;
 /**
  * Forecast
  */
-public class Forecast {
+public class Forecast implements Serializable {
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     private final Date date;
     private final String description;

@@ -6,8 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.Date;
-
 
 public class ForecastActivity extends Activity {
 
@@ -15,9 +13,9 @@ public class ForecastActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
-        Forecast randomForecast = Forecast.makeRandom(new Date());
+        Forecast forecast = (Forecast) getIntent().getSerializableExtra("forecast");
         TextView forecastTextView = (TextView) findViewById(R.id.forecast_text);
-        forecastTextView.setText(randomForecast.toString());
+        forecastTextView.setText(forecast.toString());
     }
 
 

@@ -1,10 +1,13 @@
 package ge.tot.weatherapp;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -22,6 +25,14 @@ public class MyActivity extends ListActivity {
         setListAdapter(adapter);
     }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Forecast forecast = (Forecast) getListAdapter().getItem(position);
+        Intent forecastIntent = new Intent(this, ForecastActivity.class);
+        forecastIntent.putExtra("forecast", forecast);
+        startActivity(forecastIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
