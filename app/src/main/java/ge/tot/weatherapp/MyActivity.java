@@ -1,25 +1,29 @@
 package ge.tot.weatherapp;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
-public class MyActivity extends Activity {
+public class MyActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
-        findViewById(R.id.forecast).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MyActivity.this, ForecastActivity.class));
-            }
-        });
+        List<Forecast> forecasts = new ArrayList<Forecast>();
+        forecasts.add(Forecast.makeRandom(new Date()));
+        forecasts.add(Forecast.makeRandom(new Date()));
+
+        ArrayAdapter<Forecast> adapter =
+            new ArrayAdapter<Forecast>(this, android.R.layout.simple_list_item_1,
+                    forecasts);
+        setListAdapter(adapter);
     }
 
 

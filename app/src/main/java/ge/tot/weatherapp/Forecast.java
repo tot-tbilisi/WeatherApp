@@ -3,6 +3,7 @@
  */
 package ge.tot.weatherapp;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -33,13 +34,9 @@ public class Forecast {
 
     @Override
     public String toString() {
-        return "Forecast{" +
-                "date=" + date +
-                ", description='" + description + '\'' +
-                ", nightTemp=" + nightTemp +
-                ", dayTemp=" + dayTemp +
-                ", iconUrl='" + iconUrl + '\'' +
-                '}';
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM");
+        return capitalize(dateFormat.format(date)
+                + String.format(" — %.2f°, %.2f°", nightTemp, dayTemp));
     }
 
     public Date getDate() {
@@ -60,5 +57,9 @@ public class Forecast {
 
     public String getIconUrl() {
         return iconUrl;
+    }
+
+    private static String capitalize(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 }
