@@ -16,10 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="ge.tot.weatherapp.ForecastActivity"
-            android:label="@string/title_activity_forecast" >
-        </activity>
     </application>
 
 </manifest>

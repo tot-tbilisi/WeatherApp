@@ -1,7 +1,6 @@
 package ge.tot.weatherapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +13,11 @@ public class MyActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new WeatherListFragment(), "weather_list")
-                .commit();
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .replace(android.R.id.content, new WeatherListFragment(), "weather_list")
+                    .commit();
+        }
     }
 
     @Override
@@ -49,9 +50,12 @@ public class MyActivity extends Activity {
 
     @Subscribe
     public void onWeatherItemClicked(WeatherItemClickedEvent event) {
-        Intent intent = new Intent(this, ForecastActivity.class);
-        intent.putExtra("forecast", event.getForecast());
-        startActivity(intent);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content,
+                        ForecastFragment.newInstance(event.getForecast()),
+                        "forecast")
+                .addToBackStack("forecast")
+                .commit();
     }
 
     @Override
