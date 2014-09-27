@@ -31,6 +31,17 @@ public class Forecast {
         this.iconUrl = iconUrl;
     }
 
+    @Override
+    public String toString() {
+        return "Forecast{" +
+                "date=" + date +
+                ", description='" + description + '\'' +
+                ", nightTemp=" + nightTemp +
+                ", dayTemp=" + dayTemp +
+                ", iconUrl='" + iconUrl + '\'' +
+                '}';
+    }
+
     public Date getDate() {
         return date;
     }
