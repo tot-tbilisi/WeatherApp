@@ -1,37 +1,22 @@
 package ge.tot.weatherapp;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.util.List;
+import com.squareup.otto.Subscribe;
 
 
-public class MyActivity extends ListActivity {
+public class MyActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<Forecast> forecasts = Forecast.makeRandom(7);
-
-        ArrayAdapter<Forecast> adapter =
-            new ArrayAdapter<Forecast>(this, android.R.layout.simple_list_item_1,
-                    forecasts);
-        setListAdapter(adapter);
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        Forecast forecast = (Forecast) getListAdapter().getItem(position);
-        Intent forecastIntent = new Intent(this, ForecastActivity.class);
-        forecastIntent.putExtra("forecast", forecast);
-        startActivity(forecastIntent);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new WeatherListFragment(), "weather_list")
+                .commit();
     }
 
     @Override
@@ -54,5 +39,24 @@ public class MyActivity extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BusProvider.getBus().register(this);
+    }
+
+    @Subscribe
+    public void onWeatherItemClicked(WeatherItemClickedEvent event) {
+        Intent intent = new Intent(this, ForecastActivity.class);
+        intent.putExtra("forecast", event.getForecast());
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BusProvider.getBus().unregister(this);
     }
 }
