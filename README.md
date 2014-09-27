@@ -2,5 +2,6 @@ WeatherApp
 ==========
 
 Awesome Weather App. Very useful to learn programming for Android!  
-Start with clone repo:  
+
+Command to start:  
 `git clone https://github.com/tot-tbilisi/WeatherApp.git`
