@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="96dp"
+              android:padding="16dp"
+              tools:background="#ffff00">
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow"/>
+
+
+    <TextView
+        android:id="@+id/weather_list_item_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_centerVertical="true"
+        android:textSize="27sp"
+        tools:text="Sunday (22*C)"/>
+
+    <ImageView
+        android:id="@+id/weather_list_item_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerVertical="true"
+        tools:src="@drawable/ic_launcher"/>
+
+</RelativeLayout>

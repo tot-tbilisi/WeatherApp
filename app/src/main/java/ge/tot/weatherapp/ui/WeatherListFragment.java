@@ -6,7 +6,6 @@ import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -21,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ge.tot.weatherapp.otto.BusProvider;
 import ge.tot.weatherapp.model.Forecast;
-import ge.tot.weatherapp.protocol.Response;
+import ge.tot.weatherapp.otto.BusProvider;
 import ge.tot.weatherapp.otto.WeatherItemClickedEvent;
+import ge.tot.weatherapp.protocol.Response;
 
 
 /**
@@ -48,10 +47,7 @@ public class WeatherListFragment extends ListFragment {
                 setListAdapter(null);
                 setEmptyText("Unexpected error. Please check your network connection");
             } else {
-                ArrayAdapter<Forecast> adapter = new ArrayAdapter<Forecast>(
-                        getActivity(),
-                        android.R.layout.simple_list_item_1,
-                        result);
+                WeatherListAdapter adapter = new WeatherListAdapter(getActivity(), result);
                 setListAdapter(adapter);
                 setListShown(true);
             }
