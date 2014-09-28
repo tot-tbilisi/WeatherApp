@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 Medlert, Inc.
  */
-package ge.tot.weatherapp;
+package ge.tot.weatherapp.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

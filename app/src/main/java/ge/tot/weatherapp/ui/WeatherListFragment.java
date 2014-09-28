@@ -1,4 +1,4 @@
-package ge.tot.weatherapp;
+package ge.tot.weatherapp.ui;
 
 
 import android.app.Fragment;
@@ -20,6 +20,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import ge.tot.weatherapp.otto.BusProvider;
+import ge.tot.weatherapp.model.Forecast;
+import ge.tot.weatherapp.protocol.Response;
+import ge.tot.weatherapp.otto.WeatherItemClickedEvent;
 
 
 /**

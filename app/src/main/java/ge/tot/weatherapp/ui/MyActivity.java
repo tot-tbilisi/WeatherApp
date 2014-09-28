@@ -1,4 +1,4 @@
-package ge.tot.weatherapp;
+package ge.tot.weatherapp.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
+
+import ge.tot.weatherapp.otto.BusProvider;
+import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.otto.WeatherItemClickedEvent;
 
 
 public class MyActivity extends Activity {

@@ -1,4 +1,4 @@
-package ge.tot.weatherapp;
+package ge.tot.weatherapp.protocol;
 
 import com.google.gson.annotations.SerializedName;
 

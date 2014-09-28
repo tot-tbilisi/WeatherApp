@@ -1,4 +1,4 @@
-package ge.tot.weatherapp;
+package ge.tot.weatherapp.ui;
 
 
 
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import ge.tot.weatherapp.model.Forecast;
+import ge.tot.weatherapp.R;
 
 
 /**
