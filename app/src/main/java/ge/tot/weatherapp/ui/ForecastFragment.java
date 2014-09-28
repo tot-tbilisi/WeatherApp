@@ -1,11 +1,18 @@
 package ge.tot.weatherapp.ui;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import ge.tot.weatherapp.R;
 import ge.tot.weatherapp.model.Forecast;
 
@@ -80,5 +88,32 @@ public class ForecastFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    @SuppressWarnings("UnusedDeclaration") // Used by injector
+    @OnClick(R.id.forecast_icon)
+    /*injected*/ void onIconClick() {
+        final float dp48 = dipToPixels(getActivity(), 48);
+        final ObjectAnimator shiftAnimator = ObjectAnimator.ofFloat(iconImage, "translationX", 0, +dp48);
+        shiftAnimator.setDuration(750);
+        shiftAnimator.setInterpolator(new LinearInterpolator());
+        shiftAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                final ObjectAnimator walkAnimator = ObjectAnimator.ofFloat(iconImage, "translationX", dp48, -dp48);
+                walkAnimator.setDuration(1500);
+                walkAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+                walkAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+                walkAnimator.setInterpolator(new LinearInterpolator());
+                walkAnimator.start();
+            }
+        });
+        shiftAnimator.start();
+    }
+
+    private static float dipToPixels(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 }
