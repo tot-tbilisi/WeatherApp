@@ -1,14 +1,53 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context="ge.tot.weatherapp.ui.ForecastFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/forecast_text"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/forecast_icon"
+        android:layout_width="192dp"
+        android:layout_height="192dp"
+        android:layout_gravity="center_horizontal"
+        tools:background="#fff000"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/forecast_day_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginRight="16dp"
+            android:textSize="64sp"
+            android:textStyle="bold"
+            android:gravity="bottom"
+            tools:text="21°C"/>
+
+        <TextView
+            android:id="@+id/forecast_night_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:textSize="34sp"
+            android:gravity="bottom"
+            android:paddingBottom="4dp"
+            tools:text="7°C"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forecast_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Sunny"
+        android:gravity="center"
+        android:textSize="32sp"/>
+</LinearLayout>

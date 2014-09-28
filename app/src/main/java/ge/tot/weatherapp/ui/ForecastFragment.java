@@ -1,16 +1,20 @@
 package ge.tot.weatherapp.ui;
 
 
-
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import ge.tot.weatherapp.model.Forecast;
+import com.squareup.picasso.Picasso;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.model.Forecast;
 
 
 /**
@@ -22,8 +26,12 @@ import ge.tot.weatherapp.R;
 public class ForecastFragment extends Fragment {
     private static final String ARG_FORECAST = "forecast";
 
-    private Forecast forecast;
+    @InjectView(R.id.forecast_icon) ImageView iconImage;
+    @InjectView(R.id.forecast_day_temp) TextView dayTempText;
+    @InjectView(R.id.forecast_night_temp) TextView nightTempText;
+    @InjectView(R.id.forecast_description) TextView descriptionText;
 
+    private Forecast forecast;
 
     public static ForecastFragment newInstance(Forecast forecast) {
         ForecastFragment fragment = new ForecastFragment();
@@ -51,8 +59,11 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView text = (TextView) view.findViewById(R.id.forecast_text);
-        text.setText(forecast.toString());
+        ButterKnife.inject(this, view);
+        Picasso.with(getActivity()).load(forecast.getIconUrl()).into(iconImage);
+        dayTempText.setText(forecast.getDayTemp() + "°C");
+        nightTempText.setText(forecast.getNightTemp() + "°C");
+        descriptionText.setText(forecast.getDescription());
     }
 
     @Override
@@ -63,5 +74,11 @@ public class ForecastFragment extends Fragment {
 
     private void initFromBundle(Bundle bundle) {
         forecast = (Forecast) bundle.getSerializable(ARG_FORECAST);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 }

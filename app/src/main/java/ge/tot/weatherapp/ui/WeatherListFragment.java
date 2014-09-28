@@ -147,7 +147,7 @@ public class WeatherListFragment extends ListFragment {
             Date date = new Date(rForecast.dt);
             double dayTemp = rForecast.temp.day;
             double nightTemp = rForecast.temp.night;
-            String iconUrl = rForecast.weatherList.get(0).description;
+            String iconUrl = "http://openweathermap.org/img/w/" + rForecast.weatherList.get(0).icon + ".png";
             String description = rForecast.weatherList.get(0).description;
             forecasts.add(new Forecast(date, description, nightTemp, dayTemp, iconUrl));
         }
