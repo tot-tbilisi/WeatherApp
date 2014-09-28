@@ -144,7 +144,7 @@ public class WeatherListFragment extends ListFragment {
         Response response = new Gson().fromJson(responseJson, Response.class);
         List<Forecast> forecasts = new ArrayList<Forecast>();
         for (Response.RForecast rForecast : response.RForecastList) {
-            Date date = new Date(rForecast.dt);
+            Date date = new Date(rForecast.dt * 1000);
             double dayTemp = rForecast.temp.day;
             double nightTemp = rForecast.temp.night;
             String iconUrl = "http://openweathermap.org/img/w/" + rForecast.weatherList.get(0).icon + ".png";

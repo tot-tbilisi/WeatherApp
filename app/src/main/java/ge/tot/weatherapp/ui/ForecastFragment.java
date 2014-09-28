@@ -61,8 +61,8 @@ public class ForecastFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         Picasso.with(getActivity()).load(forecast.getIconUrl()).into(iconImage);
-        dayTempText.setText(forecast.getDayTemp() + "°C");
-        nightTempText.setText(forecast.getNightTemp() + "°C");
+        dayTempText.setText((int) forecast.getDayTemp() + "°C");
+        nightTempText.setText((int) forecast.getNightTemp() + "°C");
         descriptionText.setText(forecast.getDescription());
     }
 
