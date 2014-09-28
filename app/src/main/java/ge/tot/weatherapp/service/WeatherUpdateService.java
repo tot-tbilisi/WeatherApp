@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -62,9 +64,15 @@ public class WeatherUpdateService extends IntentService {
 
                 try {
                     Bitmap weatherIcon = Picasso.with(this).load(newForecast.getIconUrl()).get();
+                    Uri defaultNotificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
                     Notification notification = new Notification.Builder(this)
                             .setContentTitle(getString(R.string.weather_changed))
                             .setSmallIcon(R.drawable.ic_launcher)
+                            .setSound(defaultNotificationSound)
+                            .setTicker(newForecast.getDescription())
+                            .setWhen(new Date().getTime())
                             .setLargeIcon(weatherIcon)
                             .setContentText(newForecast.getDescription())
                             .build();
