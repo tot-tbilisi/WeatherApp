@@ -87,7 +87,7 @@ public class WeatherListFragment extends ListFragment implements SensorEventList
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
         if(sensor != null) {
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
 
