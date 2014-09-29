@@ -147,6 +147,7 @@ public class WeatherListFragment extends ListFragment {
             String description = rForecast.weatherList.get(0).description;
             forecasts.add(new Forecast(date, description, nightTemp, dayTemp, iconUrl));
         }
+        ((MyActivity)getActivity()).setDayTemp(String.valueOf(forecasts.get(0).getDayTemp()));
         return forecasts;
     }
 }

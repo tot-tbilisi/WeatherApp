@@ -6,6 +6,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +24,7 @@ import ge.tot.weatherapp.service.WeatherUpdateService;
 public class MyActivity extends Activity {
 
     Bitmap photoBitmap;
+    String dayTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +71,16 @@ public class MyActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap bp = (Bitmap) data.getExtras().get("data");
         if (bp != null) {
-            photoBitmap = bp;
+            photoBitmap = drawTextToBitmap(bp, dayTemp);
             getFragmentManager().beginTransaction()
                     .replace(android.R.id.content, new PhotoFragment(), "photo_fragment")
                     .addToBackStack("forecast")
                     .commit();
         }
+    }
+
+    public void setDayTemp(String dayTemp) {
+        this.dayTemp = dayTemp + "°C";
     }
 
     public Bitmap getPhotoBitmap() {
@@ -98,5 +107,24 @@ public class MyActivity extends Activity {
     protected void onStop() {
         super.onStop();
         BusProvider.getBus().unregister(this);
+    }
+
+    public Bitmap drawTextToBitmap(Bitmap bitmap, String text) {
+
+        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+        Canvas c = new Canvas(bitmap);
+        Paint paint = new Paint();
+
+        paint.setColor(Color.rgb(0, 0, 0));
+
+        Rect bounds = new Rect();
+        paint.getTextBounds(text, 0, text.length(), bounds);
+        int x = (bitmap.getWidth() - (bounds.width()+10));
+        int y = (bitmap.getHeight() - bounds.height());
+
+        c.drawText(text, x, y, paint);
+
+        return bitmap;
     }
 }
