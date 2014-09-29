@@ -4,7 +4,9 @@
 package ge.tot.weatherapp.ui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +42,17 @@ public class WeatherListAdapter extends ArrayAdapter<Forecast> {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
 
         TextView infoText = ButterKnife.findById(itemView, R.id.weather_list_item_info);
-        String description = String.format("%s (%d°C)",
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String unit = prefs.getString("unit", "metric");
+        String mark;
+        if ("metric".equals(unit)) {
+            mark = "C";
+        } else {
+            mark = "F";
+        }
+        String description = String.format("%s (%d°" + mark + ")",
                 dateFormat.format(forecast.getDate()),
-                (int)forecast.getDayTemp());
+                (int) forecast.getDayTemp());
         infoText.setText(description);
 
         if (position % 2 != 0) {
