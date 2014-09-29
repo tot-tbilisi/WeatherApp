@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.UrlProvider;
 import ge.tot.weatherapp.model.Forecast;
 import ge.tot.weatherapp.protocol.Response;
 
@@ -101,7 +102,7 @@ public class WeatherUpdateService extends IntentService {
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are available at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
-            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=Tbilisi&mode=json&units=metric&cnt=7&lang=en");
+            URL url = new URL(UrlProvider.provideUrl(this));
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
