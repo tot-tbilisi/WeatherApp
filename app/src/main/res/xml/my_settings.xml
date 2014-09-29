@@ -9,4 +9,11 @@
             android:entries="@array/human_readable_units"
             android:entryValues="@array/units_values" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="City">
+        <EditTextPreference
+            android:key="city"
+            android:defaultValue="Tbilisi"
+            android:title="City" />
+    </PreferenceCategory>
 </PreferenceScreen>
