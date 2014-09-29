@@ -31,8 +31,9 @@
 
         <service
             android:name="ge.tot.weatherapp.service.WeatherUpdateService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
+
+        <activity android:name=".ui.SettingsActivity" />
     </application>
 
 </manifest>
