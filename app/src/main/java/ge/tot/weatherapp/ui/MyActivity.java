@@ -2,12 +2,14 @@ package ge.tot.weatherapp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -48,7 +50,7 @@ public class MyActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this,SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else if (id == R.id.action_capture_photo) {
             openCamera();
@@ -76,6 +78,14 @@ public class MyActivity extends Activity {
                         .commit();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String city = prefs.getString("city", "Tbilisi");
+        setTitle("Weather in " + city);
     }
 
     public void setDayTemp(String dayTemp) {
