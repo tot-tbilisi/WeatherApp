@@ -1,9 +1,6 @@
 package ge.tot.weatherapp.ui;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,10 +13,9 @@ import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 
-import ge.tot.weatherapp.otto.BusProvider;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.otto.BusProvider;
 import ge.tot.weatherapp.otto.WeatherItemClickedEvent;
-import ge.tot.weatherapp.service.WeatherUpdateService;
 
 public class MyActivity extends Activity {
 
@@ -69,13 +65,15 @@ public class MyActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bp = (Bitmap) data.getExtras().get("data");
-        if (bp != null) {
-            photoBitmap = drawTextToBitmap(bp, dayTemp);
-            getFragmentManager().beginTransaction()
-                    .replace(android.R.id.content, new PhotoFragment(), "photo_fragment")
-                    .addToBackStack("forecast")
-                    .commit();
+        if (requestCode == RESULT_OK) {
+            Bitmap bp = (Bitmap) data.getExtras().get("data");
+            if (bp != null) {
+                photoBitmap = drawTextToBitmap(bp, dayTemp);
+                getFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, new PhotoFragment(), "photo_fragment")
+                        .addToBackStack("forecast")
+                        .commit();
+            }
         }
     }
 
@@ -120,7 +118,7 @@ public class MyActivity extends Activity {
 
         Rect bounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), bounds);
-        int x = (bitmap.getWidth() - (bounds.width()+10));
+        int x = (bitmap.getWidth() - (bounds.width() + 10));
         int y = (bitmap.getHeight() - bounds.height());
 
         c.drawText(text, x, y, paint);
