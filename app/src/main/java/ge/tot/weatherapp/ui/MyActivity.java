@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +17,9 @@ import ge.tot.weatherapp.R;
 import ge.tot.weatherapp.otto.WeatherItemClickedEvent;
 import ge.tot.weatherapp.service.WeatherUpdateService;
 
-
 public class MyActivity extends Activity {
+
+    Bitmap photoBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,34 @@ public class MyActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_capture_photo) {
+            openCamera();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bp = (Bitmap) data.getExtras().get("data");
+        if (bp != null) {
+            photoBitmap = bp;
+            getFragmentManager().beginTransaction()
+                    .replace(android.R.id.content, new PhotoFragment(), "photo_fragment")
+                    .addToBackStack("forecast")
+                    .commit();
+        }
+    }
+
+    public Bitmap getPhotoBitmap() {
+        return photoBitmap;
     }
 
     @Override

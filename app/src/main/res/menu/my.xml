@@ -5,4 +5,9 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+
+    <item android:id="@+id/action_capture_photo"
+        android:title="capture photo"
+        android:orderInCategory="100"
+        android:showAsAction="always" />
 </menu>
