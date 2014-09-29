@@ -3,9 +3,12 @@ package ge.tot.weatherapp.ui;
 
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +55,28 @@ public class PhotoFragment extends Fragment {
         photo = (ImageView) rootView.findViewById(R.id.photo);
         sharePhoto = (Button) rootView.findViewById(R.id.button_photo_share);
 
-        Bitmap photoBitmap = ((MyActivity)getActivity()).getPhotoBitmap();
+        final Bitmap photoBitmap = ((MyActivity)getActivity()).getPhotoBitmap();
 
         photo.setImageBitmap(photoBitmap);
 
+        sharePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharePhoto(photoBitmap);
+            }
+        });
+
         return rootView;
+    }
+
+    public void sharePhoto(Bitmap bitmap) {
+        String pathofBmp = MediaStore.Images.Media.insertImage(
+                getActivity().getContentResolver(), bitmap, "title", null);
+        Uri bmpUri = Uri.parse(pathofBmp);
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+        shareIntent.setType("image/png");
+        startActivity(shareIntent);
     }
 }
