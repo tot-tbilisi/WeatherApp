@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/units">
+        <ListPreference
+            android:key="unit"
+            android:title="@string/current_unit"
+            android:entries="@array/human_readable_units"
+            android:entryValues="@array/units_values" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -7,4 +7,16 @@
     <string name="title_activity_forecast">ForecastActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="weather_changed">Weather Changed</string>
+    <string name="units">Units</string>
+    <string name="current_unit">Current unit</string>
+
+    <string-array name="human_readable_units">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+    <string-array name="units_values">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
 </resources>
