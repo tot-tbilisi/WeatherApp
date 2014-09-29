@@ -3,10 +3,17 @@ package ge.tot.weatherapp.ui;
 
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -31,7 +38,20 @@ import ge.tot.weatherapp.protocol.Response;
  * A simple {@link Fragment} subclass.
  *
  */
-public class WeatherListFragment extends ListFragment {
+public class WeatherListFragment extends ListFragment implements SensorEventListener {
+
+    private SensorManager sensorManager;
+    private Sensor sensor;
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Toast.makeText(getActivity(), String.format("%f hPa", event.values[0]), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 
     public class LoadWeatherTask extends AsyncTask<Void, Void, List<Forecast>> {
 
@@ -63,6 +83,28 @@ public class WeatherListFragment extends ListFragment {
     public void onStart() {
         super.onStart();
         new LoadWeatherTask().execute();
+
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+
+        if(sensor != null) {
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(sensor != null) {
+            sensorManager.unregisterListener(this);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+
     }
 
     @Override
