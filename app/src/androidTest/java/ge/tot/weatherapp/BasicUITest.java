@@ -22,11 +22,20 @@ public class BasicUITest extends ActivityInstrumentationTestCase2<MyActivity> {
         super(MyActivity.class);
     }
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        getActivity();
+    }
 
     public void testListItemClick() throws Exception {
-        getActivity();
         onData(hasToString(startsWith("Tue"))).perform(click());
-        Thread.sleep(1000);
+        onView(withId(R.id.forecast_description))
+                .check(matches(isDisplayed()));
+    }
+
+    public void testListItemClick2() throws Exception {
+        onData(hasToString(startsWith("Wed"))).perform(click());
         onView(withId(R.id.forecast_description))
                 .check(matches(isDisplayed()));
     }
