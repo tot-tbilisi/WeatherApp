@@ -56,6 +56,13 @@ public class LocationFragment extends Fragment
     @Override
     public void onConnected(Bundle bundle) {
         locationClient.requestLocationUpdates(getLocationRequest(), this);
+        Location lastLocation = locationClient.getLastLocation();
+        if (lastLocation != null) {
+            onLocationChanged(lastLocation);
+        } else {
+            Toast.makeText(getActivity(), "Last location is not available - waiting",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -70,6 +77,6 @@ public class LocationFragment extends Fragment
 
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(getActivity(), "Our location is retrieved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), location.getLatitude() + "," + location.getLongitude(), Toast.LENGTH_SHORT).show();
     }
 }
