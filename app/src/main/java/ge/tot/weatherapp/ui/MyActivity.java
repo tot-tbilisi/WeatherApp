@@ -18,6 +18,7 @@ import com.squareup.otto.Subscribe;
 import ge.tot.weatherapp.R;
 import ge.tot.weatherapp.otto.BusProvider;
 import ge.tot.weatherapp.otto.WeatherItemClickedEvent;
+import ge.tot.weatherapp.service.GCMRegistrationService;
 
 public class MyActivity extends Activity {
 
@@ -28,6 +29,7 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
+            startService(new Intent(this, GCMRegistrationService.class));
             getFragmentManager().beginTransaction()
                     .replace(android.R.id.content, new WeatherListFragment(), "weather_list")
                     .add(new LocationFragment(), "location")
