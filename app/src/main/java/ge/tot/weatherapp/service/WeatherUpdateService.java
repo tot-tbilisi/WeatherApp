@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
