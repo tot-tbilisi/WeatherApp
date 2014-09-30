@@ -3,6 +3,7 @@ package ge.tot.weatherapp.ui;
 import android.app.Fragment;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -58,11 +59,11 @@ public class LocationFragment extends Fragment
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Toast.makeText(getActivity(), "Connection failed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
+        Toast.makeText(getActivity(), "Our location is retrieved", Toast.LENGTH_SHORT).show();
     }
 }

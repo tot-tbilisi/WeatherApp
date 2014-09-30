@@ -30,6 +30,7 @@ public class MyActivity extends Activity {
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .replace(android.R.id.content, new WeatherListFragment(), "weather_list")
+                    .add(new LocationFragment(), "location")
                     .commit();
         }
     }
