@@ -1,4 +1,4 @@
-package ge.tot.weatherapp.service;
+package ge.tot.weatherapp.app.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -11,7 +11,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import ge.tot.weatherapp.R;
-import ge.tot.weatherapp.ui.MyActivity;
+import ge.tot.weatherapp.app.ui.activities.MainActivity;
 
 public class GCMHandlerService extends IntentService {
 
@@ -34,7 +34,7 @@ public class GCMHandlerService extends IntentService {
         String messageBody = intent.getStringExtra("custom_message");
         Log.d(TAG, "Received message: " + messageBody);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        Intent activityIntent = new Intent(this, MyActivity.class);
+        Intent activityIntent = new Intent(this, MainActivity.class);
         Notification notification = builder
                 .setContentTitle("New message")
                 .setContentText(messageBody)

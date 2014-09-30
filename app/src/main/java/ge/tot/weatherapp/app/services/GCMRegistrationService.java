@@ -1,4 +1,4 @@
-package ge.tot.weatherapp.service;
+package ge.tot.weatherapp.app.services;
 
 import android.app.IntentService;
 import android.content.Intent;

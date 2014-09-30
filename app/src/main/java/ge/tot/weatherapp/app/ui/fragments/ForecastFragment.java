@@ -1,15 +1,26 @@
-package ge.tot.weatherapp.ui;
+package ge.tot.weatherapp.app.ui.fragments;
 
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -18,10 +29,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.io.File;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.app.events.ShowWeatherCollageEvent;
+import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.model.Forecast;
 
 
@@ -32,7 +49,6 @@ import ge.tot.weatherapp.model.Forecast;
  *
  */
 public class ForecastFragment extends Fragment {
-    private static final String ARG_FORECAST = "forecast";
 
     @InjectView(R.id.forecast_icon) ImageView iconImage;
     @InjectView(R.id.forecast_day_temp) TextView dayTempText;
@@ -40,14 +56,16 @@ public class ForecastFragment extends Fragment {
     @InjectView(R.id.forecast_description) TextView descriptionText;
 
     private Forecast forecast;
+    private String cameraPicturePath;
 
     public static ForecastFragment newInstance(Forecast forecast) {
         ForecastFragment fragment = new ForecastFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_FORECAST, forecast);
+        args.putSerializable("forecast", forecast);
         fragment.setArguments(args);
         return fragment;
     }
+
     public ForecastFragment() {
         // Required empty public constructor
     }
@@ -55,7 +73,14 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         initFromBundle(savedInstanceState == null ? getArguments() : savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.forecast, menu);
     }
 
     @Override
@@ -69,19 +94,44 @@ public class ForecastFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         Picasso.with(getActivity()).load(forecast.getIconUrl()).into(iconImage);
-        dayTempText.setText((int) forecast.getDayTemp() + "°C");
-        nightTempText.setText((int) forecast.getNightTemp() + "°C");
-        descriptionText.setText(forecast.getDescription());
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String unit = settings.getString("unit", "metric");
+        String unitSign = unit.equals("imperial") ? "F" : "C";
+        dayTempText.setText((int) forecast.getDayTemp() + "°" + unitSign);
+        nightTempText.setText((int) forecast.getNightTemp() + "°" + unitSign);
+        descriptionText.setText(WordUtils.capitalize(forecast.getDescription()));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            // workaround because onActivityResult is called before onStart and event posting is not working
+            // TODO: implement better solution
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ServiceProvider.getInstance().provideBus().post(new ShowWeatherCollageEvent(cameraPicturePath, forecast));
+                }
+            }, 500);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_capture_photo) {
+            openCamera();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(ARG_FORECAST, forecast);
-    }
-
-    private void initFromBundle(Bundle bundle) {
-        forecast = (Forecast) bundle.getSerializable(ARG_FORECAST);
+        outState.putSerializable("forecast", forecast);
+        outState.putString("cameraPicturePath", cameraPicturePath);
     }
 
     @Override
@@ -110,6 +160,19 @@ public class ForecastFragment extends Fragment {
             }
         });
         shiftAnimator.start();
+    }
+
+    public void openCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),  "pic" + System.currentTimeMillis() + ".jpg");
+        cameraPicturePath = photo.getAbsolutePath();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+        startActivityForResult(intent, 0);
+    }
+
+    private void initFromBundle(Bundle bundle) {
+        forecast = (Forecast) bundle.getSerializable("forecast");
+        cameraPicturePath = bundle.getString("cameraPicturePath");
     }
 
     private static float dipToPixels(Context context, float dipValue) {

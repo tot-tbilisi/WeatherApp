@@ -1,4 +1,4 @@
-package ge.tot.weatherapp.receiver;
+package ge.tot.weatherapp.app.receivers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,7 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import ge.tot.weatherapp.service.WeatherUpdateService;
+import ge.tot.weatherapp.app.services.WeatherUpdateService;
 
 /**
  * Created by maui on 28.09.14.

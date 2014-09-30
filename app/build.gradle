@@ -31,5 +31,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.squareup.picasso:picasso:2.3.4'
     compile 'com.google.android.gms:play-services:5.0.+'
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'org.apache.commons:commons-lang3:3.0'
     androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
 }

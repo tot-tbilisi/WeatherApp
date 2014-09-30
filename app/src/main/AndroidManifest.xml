@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ge.tot.weatherapp">
+          package="ge.tot.weatherapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -21,7 +21,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="ge.tot.weatherapp.ui.MyActivity"
+            android:name=".app.ui.activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,14 +30,14 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="ge.tot.weatherapp.receiver.OnBootUpReceiver">
+        <receiver android:name=".app.receivers.OnBootUpReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <receiver
-            android:name="ge.tot.weatherapp.receiver.GCMReceiver"
+            android:name=".app.receivers.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -46,18 +46,18 @@
         </receiver>
 
         <service
-            android:name="ge.tot.weatherapp.service.WeatherUpdateService"
-            android:exported="false"></service>
+            android:name=".app.services.WeatherUpdateService"
+            android:exported="false"/>
 
         <service
-            android:name=".service.GCMRegistrationService"
+            android:name=".app.services.GCMRegistrationService"
             android:exported="false" />
 
         <service
-            android:name=".service.GCMHandlerService"
+            android:name=".app.services.GCMHandlerService"
             android:exported="false" />
 
-        <activity android:name=".ui.SettingsActivity" />
+        <activity android:name=".app.ui.activities.SettingsActivity" />
     </application>
 
 </manifest>

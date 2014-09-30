@@ -1,7 +1,9 @@
-package ge.tot.weatherapp.ui;
+package ge.tot.weatherapp.app.ui.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import ge.tot.weatherapp.app.ui.fragments.SettingsFragment;
 
 public class SettingsActivity extends Activity {
 

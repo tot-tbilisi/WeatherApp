@@ -1,7 +1,4 @@
-/*
- * Copyright (C) 2014 Medlert, Inc.
- */
-package ge.tot.weatherapp.otto;
+package ge.tot.weatherapp.app.events;
 
 import ge.tot.weatherapp.model.Forecast;
 

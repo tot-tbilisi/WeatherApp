@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="16dp"
-    tools:context="ge.tot.weatherapp.ui.ForecastFragment">
+    tools:context="ge.tot.weatherapp.app.ui.fragments.ForecastFragment">
 
     <ImageView
         android:id="@+id/forecast_icon"

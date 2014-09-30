@@ -1,7 +1,4 @@
-/*
- * Copyright (C) 2014 Medlert, Inc.
- */
-package ge.tot.weatherapp.ui;
+package ge.tot.weatherapp.app.ui.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;

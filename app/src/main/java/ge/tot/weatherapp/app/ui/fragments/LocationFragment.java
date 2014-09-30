@@ -1,4 +1,4 @@
-package ge.tot.weatherapp.ui;
+package ge.tot.weatherapp.app.ui.fragments;
 
 import android.app.Fragment;
 import android.location.Location;
