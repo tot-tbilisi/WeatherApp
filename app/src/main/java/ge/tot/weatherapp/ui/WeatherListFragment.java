@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -45,7 +44,6 @@ public class WeatherListFragment extends ListFragment implements SensorEventList
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Toast.makeText(getActivity(), String.format("%f hPa", event.values[0]), Toast.LENGTH_SHORT).show();
     }
 
     @Override
