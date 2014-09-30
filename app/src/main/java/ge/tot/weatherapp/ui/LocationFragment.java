@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -35,7 +36,12 @@ public class LocationFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
-        locationClient.connect();
+        int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+        if (statusCode != ConnectionResult.SUCCESS) {
+            GooglePlayServicesUtil.getErrorDialog(statusCode, getActivity(), 0).show();
+        } else {
+            locationClient.connect();
+        }
     }
 
     @Override
