@@ -2,9 +2,7 @@ package ge.tot.weatherapp.app.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
@@ -41,14 +39,6 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String city = prefs.getString("city", "Tbilisi");
-        setTitle("Weather in " + city);
     }
 
     @Override

@@ -3,7 +3,7 @@
     tools:context=".MyActivity" >
 
     <item android:id="@+id/action_capture_photo"
-        android:title="capture photo"
+        android:title="@string/menu_make_collage"
         android:orderInCategory="100"
         android:showAsAction="always" />
 </menu>

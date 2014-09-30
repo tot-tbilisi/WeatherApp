@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -57,6 +56,7 @@ public class ForecastFragment extends Fragment {
 
     private Forecast forecast;
     private String cameraPicturePath;
+    private Object onActivityResultEvent;
 
     public static ForecastFragment newInstance(Forecast forecast) {
         ForecastFragment fragment = new ForecastFragment();
@@ -106,15 +106,20 @@ public class ForecastFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            // workaround because onActivityResult is called before onStart and event posting is not working
-            // TODO: implement better solution
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ServiceProvider.getInstance().provideBus().post(new ShowWeatherCollageEvent(cameraPicturePath, forecast));
-                }
-            }, 500);
+            onActivityResultEvent = new ShowWeatherCollageEvent(cameraPicturePath, forecast);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (onActivityResultEvent != null) {
+            ServiceProvider.getInstance().provideBus().post(onActivityResultEvent);
+            onActivityResultEvent = null;
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String city = prefs.getString("city", "Tbilisi");
+        getActivity().setTitle("Weather in " + city);
     }
 
     @Override

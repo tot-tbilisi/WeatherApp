@@ -94,6 +94,10 @@ public class WeatherListFragment extends ListFragment implements SensorEventList
         if(sensor != null) {
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
         }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String city = prefs.getString("city", "Tbilisi");
+        getActivity().setTitle("Weather in " + city);
     }
 
     @Override
