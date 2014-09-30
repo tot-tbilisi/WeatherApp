@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.app.events.UnlockAchievementEvent;
+import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.model.Forecast;
 
 
@@ -88,6 +90,12 @@ public class CollageFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        ServiceProvider.getInstance().provideBus().post(new UnlockAchievementEvent(getString(R.string.achievement_id_collage)));
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("picImagePath", picImagePath);
@@ -103,7 +111,7 @@ public class CollageFragment extends Fragment {
     @SuppressWarnings("UnusedDeclaration") // Used by injector
     @OnClick(R.id.collage_share)
     /*injected*/ void onShareClick() {
-        Uri bmpUri = Uri.parse(picImagePath);
+        Uri bmpUri = Uri.parse(picImagePath); // FIXME: we need to pass collage bitmap
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);

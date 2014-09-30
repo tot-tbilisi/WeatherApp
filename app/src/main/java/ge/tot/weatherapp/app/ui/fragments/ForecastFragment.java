@@ -37,7 +37,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.app.events.IncrementAchievementEvent;
 import ge.tot.weatherapp.app.events.ShowWeatherCollageEvent;
+import ge.tot.weatherapp.app.events.UnlockAchievementEvent;
 import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.model.Forecast;
 
@@ -84,6 +86,16 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_capture_photo) {
+            openCamera();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_forecast, container, false);
@@ -118,13 +130,15 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_capture_photo) {
-            openCamera();
-            return true;
+    public void onStart() {
+        super.onStart();
+        if (forecast.getDescription().toLowerCase().contains("rain")) {
+            ServiceProvider.getInstance().provideBus().post(new UnlockAchievementEvent(getString(R.string.achievement_id_rainy_day)));
+            ServiceProvider.getInstance().provideBus().post(new IncrementAchievementEvent(getString(R.string.achievement_id_5_rainy_days)));
+        } else if (forecast.getDescription().toLowerCase().contains("sky is clear")) {
+            ServiceProvider.getInstance().provideBus().post(new UnlockAchievementEvent(getString(R.string.achievement_id_sunny_day)));
+            ServiceProvider.getInstance().provideBus().post(new IncrementAchievementEvent(getString(R.string.achievement_id_5_sunny_days)));
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
