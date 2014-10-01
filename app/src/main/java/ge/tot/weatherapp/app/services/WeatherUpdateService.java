@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,7 +76,6 @@ public class WeatherUpdateService extends IntentService {
                     Bitmap weatherIcon = Picasso.with(this).load(newForecast.getIconUrl()).get();
                     Uri defaultNotificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-
                     Notification notification = new Notification.Builder(this)
                             .setContentTitle(getString(R.string.weather_changed))
                             .setSmallIcon(R.drawable.ic_launcher)
@@ -82,8 +83,8 @@ public class WeatherUpdateService extends IntentService {
                             .setTicker(newForecast.getDescription())
                             .setWhen(new Date().getTime())
                             .setLargeIcon(weatherIcon)
-                            .setContentText(newForecast.getDescription())
-                            .build();
+                            .setContentText(WordUtils.capitalize(newForecast.getDescription()))
+                            .build(); // we know, Mr Mauer was a quite inaccurate ;-)
 
                     notificationManager.notify(123, notification);
                 } catch (IOException e) {
