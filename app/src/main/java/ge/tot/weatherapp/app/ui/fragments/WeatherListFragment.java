@@ -60,13 +60,15 @@ public class WeatherListFragment extends ListFragment implements SensorEventList
         @Override
         protected void onPostExecute(List<ge.tot.weatherapp.model.Forecast> result) {
             super.onPostExecute(result);
-            if (result == null) {
-                setListAdapter(null);
-                setEmptyText("Unexpected error. Please check your network connection");
-            } else {
-                WeatherListAdapter adapter = new WeatherListAdapter(getActivity(), result);
-                setListAdapter(adapter);
-                setListShown(true);
+            if (getActivity() != null) {
+                if (result == null) {
+                    setListAdapter(null);
+                    setEmptyText("Unexpected error. Please check your network connection");
+                } else {
+                    WeatherListAdapter adapter = new WeatherListAdapter(getActivity(), result);
+                    setListAdapter(adapter);
+                    setListShown(true);
+                }
             }
         }
     }
