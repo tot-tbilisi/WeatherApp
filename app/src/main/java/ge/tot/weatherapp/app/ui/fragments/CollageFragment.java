@@ -30,6 +30,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.app.events.UnlockAchievementEvent;
+import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.model.Forecast;
 
 
@@ -124,6 +126,7 @@ public class CollageFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getActivity().setTitle("Weather Collage");
+        ServiceProvider.getInstance().provideBus().post(new UnlockAchievementEvent(getString(R.string.achievement_id_collage)));
     }
 
     @Override

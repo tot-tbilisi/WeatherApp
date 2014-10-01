@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_id">494885830657</string>
+    <string name="achievement_id_sunny_day">CgkIgYD6y7MOEAIQAA</string>
+    <string name="achievement_id_5_sunny_days">CgkIgYD6y7MOEAIQAQ</string>
+    <string name="achievement_id_rainy_day">CgkIgYD6y7MOEAIQAg</string>
+    <string name="achievement_id_5_rainy_days">CgkIgYD6y7MOEAIQBA</string>
+    <string name="achievement_id_collage">CgkIgYD6y7MOEAIQAw</string>
+    <string name="achievement_id_master">CgkIgYD6y7MOEAIQBg</string>
+</resources>

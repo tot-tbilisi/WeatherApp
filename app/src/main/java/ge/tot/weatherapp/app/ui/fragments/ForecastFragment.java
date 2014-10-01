@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -41,12 +42,6 @@ import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.model.Forecast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ForecastFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class ForecastFragment extends Fragment {
 
     @InjectView(R.id.forecast_icon) ImageView iconImage;
@@ -84,6 +79,16 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_capture_photo) {
+            openCamera();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_forecast, container, false);
@@ -120,16 +125,6 @@ public class ForecastFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String city = prefs.getString("city", "Tbilisi");
         getActivity().setTitle("Weather in " + city);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_capture_photo) {
-            openCamera();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

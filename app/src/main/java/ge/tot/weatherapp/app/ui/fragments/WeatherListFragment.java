@@ -14,12 +14,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
 
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.app.events.OpenAchivementsEvent;
+import ge.tot.weatherapp.app.events.OpenSettingsEvent;
 import ge.tot.weatherapp.app.ui.adapters.WeatherListAdapter;
 import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.app.events.WeatherItemClickedEvent;
@@ -84,6 +87,18 @@ public class WeatherListFragment extends ListFragment implements SensorEventList
         inflater.inflate(R.menu.weather_list, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            ServiceProvider.getInstance().provideBus().post(new OpenSettingsEvent());
+            return true;
+        } else if (item.getItemId() == R.id.action_achievements) {
+            ServiceProvider.getInstance().provideBus().post(new OpenAchivementsEvent());
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onStart() {
         super.onStart();

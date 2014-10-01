@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
 
+    <item android:id="@+id/action_achievements"
+          android:title="@string/menu_achievements"
+          android:orderInCategory="100"
+          android:showAsAction="never" />
+
 </menu>
