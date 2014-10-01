@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -37,7 +36,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import ge.tot.weatherapp.R;
+import ge.tot.weatherapp.app.events.IncrementAchievementEvent;
 import ge.tot.weatherapp.app.events.ShowWeatherCollageEvent;
+import ge.tot.weatherapp.app.events.UnlockAchievementEvent;
 import ge.tot.weatherapp.di.ServiceProvider;
 import ge.tot.weatherapp.model.Forecast;
 
@@ -125,6 +126,13 @@ public class ForecastFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String city = prefs.getString("city", "Tbilisi");
         getActivity().setTitle("Weather in " + city);
+        if (forecast.getDescription().toLowerCase().contains("sky is clear")) {
+            ServiceProvider.getInstance().provideBus().post(new UnlockAchievementEvent(getString(R.string.achievement_id_sunny_day)));
+            ServiceProvider.getInstance().provideBus().post(new IncrementAchievementEvent(getString(R.string.achievement_id_5_sunny_days)));
+        } else if (forecast.getDescription().toLowerCase().contains("rain")) {
+            ServiceProvider.getInstance().provideBus().post(new UnlockAchievementEvent(getString(R.string.achievement_id_rainy_day)));
+            ServiceProvider.getInstance().provideBus().post(new IncrementAchievementEvent(getString(R.string.achievement_id_5_rainy_days)));
+        }
     }
 
     @Override
